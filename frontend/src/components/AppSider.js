@@ -1,23 +1,27 @@
-import * as React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Layout, Menu } from "antd";
+import { useEffect, useState } from "react";
 const { Sider } = Layout;
 
-const users = [
-  { name: "Saam", id: 10000 },
-  { name: "Leyla", id: 10001 },
-  { name: "Kami", id: 10002 },
-];
-
-const items = users.map((user) => {
-  return {
-    label: user.name,
-    key: user.id,
-  };
-});
-
 export function AppSider(props) {
+  const [users, setUsers] = useState();
   let navigate = useNavigate();
+
+  useEffect(() => {
+    function getUsers() {
+      fetch("https://jsonplaceholder.typicode.com/users")
+        .then((response) => response.json())
+        .then((json) => setUsers(json));
+    }
+    getUsers();
+  }, []);
+  const items = users.map((user) => {
+    return {
+      label: user.name,
+      key: user.id,
+    };
+  });
+
   return (
     <Sider>
       <Menu
