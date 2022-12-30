@@ -1,24 +1,15 @@
 import { Layout } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { UserList } from "./UserList";
 import { ViewProfile } from "./ViewProfile";
 import { EditProfile } from "./EditProfile";
+import { useUsers } from "../hooks";
 
 const { Sider } = Layout;
 
 export function AppSider() {
-  const [users, setUsers] = useState();
   const [mode, setMode] = useState(0);
-
-  useEffect(() => {
-    function getUsers() {
-      fetch("https://jsonplaceholder.typicode.com/users")
-        .then((response) => response.json())
-        .then((json) => setUsers(json));
-    }
-
-    getUsers();
-  }, []);
+  const { users } = useUsers();
 
   const components = [
     <UserList data={{ users }} setMode={setMode} />,
