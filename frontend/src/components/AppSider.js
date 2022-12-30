@@ -1,11 +1,14 @@
-import { useNavigate } from "react-router-dom";
-import { Layout, Menu } from "antd";
+import { Layout } from "antd";
 import { useEffect, useState } from "react";
+import { UserList } from "./UserList";
+import { ViewProfile } from "./ViewProfile";
+import { EditProfile } from "./EditProfile";
+
 const { Sider } = Layout;
 
-export function AppSider(props) {
+export function AppSider() {
   const [users, setUsers] = useState();
-  let navigate = useNavigate();
+  const [mode, setMode] = useState(0);
 
   useEffect(() => {
     function getUsers() {
@@ -13,25 +16,19 @@ export function AppSider(props) {
         .then((response) => response.json())
         .then((json) => setUsers(json));
     }
+
     getUsers();
   }, []);
-  const items = users.map((user) => {
-    return {
-      label: user.name,
-      key: user.id,
-    };
-  });
+
+  const components = [
+    <UserList data={{ users }} setMode={setMode} />,
+    <ViewProfile setMode={setMode} />,
+    <EditProfile setMode={setMode} />,
+  ];
 
   return (
-    <Sider>
-      <Menu
-        defaultSelectedKeys={["1"]}
-        defaultOpenKeys={["sub1"]}
-        mode="inline"
-        theme="dark"
-        items={items}
-        onClick={(item) => navigate(`${item.key}`)}
-      />
+    <Sider breakpoint="md" collapsedWidth="0" className="app-sider">
+      {components[mode]}
     </Sider>
   );
 }

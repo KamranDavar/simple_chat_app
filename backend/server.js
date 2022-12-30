@@ -10,6 +10,17 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/frontend/build/index.html"));
 });
 const httpServer = http.Server(app);
+const io = new Server(httpServer, { cors: { origin: "*" } });
+
+
+io.on('connection', (socket) => {
+    socket.on('chatMessage', (msg) => {
+      console.log(msg)
+        io.emit('chatMessage', msg);
+      });
+  });
+
+
 
 
 const PORT = process.env.PORT || 4000;

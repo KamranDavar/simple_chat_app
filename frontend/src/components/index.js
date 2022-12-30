@@ -1,5 +1,6 @@
 export {AppSider} from './AppSider'
 export {AppContent} from './AppContent'
 export {MessageList} from './MessageList'
+export {MessageForm} from './MessageForm'
 export {EditProfile} from './EditProfile'
 export {ViewProfile} from './ViewProfile'
