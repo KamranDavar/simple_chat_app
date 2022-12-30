@@ -4,7 +4,7 @@
 
 ### `npm run build`
 
-1-In the project root directory, you can run:
+1-In the project root directory, run:
 ### `npm start`
 
 
